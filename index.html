@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1 Click Solar - Instant Quotes & Installation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        h1, h2, h3, h4, .brand-font { font-family: 'Montserrat', sans-serif; }
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Custom Slider - Matches Logo Orange */
+        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; height: 28px; width: 28px; border-radius: 50%;
+            background: #f97316; /* Orange-500 */
+            cursor: pointer; margin-top: -12px; 
+            box-shadow: 0 0 20px rgba(249, 115, 22, 0.6);
+            transition: transform 0.2s;
+            border: 4px solid white;
+        }
+        input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.1); }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%; height: 6px; cursor: pointer; background: #cbd5e1; border-radius: 99px;
+        }
+        
+        /* Animations */
+        .fade-in-up { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .fade-in-up.visible { opacity: 1; transform: translateY(0); }
+        
+        .scale-in { opacity: 0; transform: scale(0.95); transition: all 0.8s ease-out; }
+        .scale-in.visible { opacity: 1; transform: scale(1); }
+
+        .smooth-scroll { scroll-behavior: smooth; }
+        
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.1);
+        }
+
+        /* Gradient Text */
+        .text-gradient-blue {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to right, #0ea5e9, #0284c7);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 smooth-scroll">
+
+    <!-- 1. FLOATING HEADER -->
+    <nav id="navbar" class="fixed w-full z-50 top-0 transition-all duration-500 ease-in-out py-4 bg-transparent text-slate-800">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            
+            <!-- LOGO CONSTRUCTION -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="relative w-12 h-12">
+                    <!-- House & Sun (Cyan/Blue) -->
+                    <i class="fas fa-home text-4xl text-[#0083c1] absolute bottom-0 left-0"></i>
+                    <i class="fas fa-sun text-2xl text-[#0083c1] absolute -top-1 -right-1 animate-pulse"></i>
+                    <!-- Cursor (Orange) -->
+                    <i class="fas fa-location-arrow text-orange-500 text-2xl absolute bottom-0 -right-2 transform -rotate-45 drop-shadow-md border-2 border-white rounded-full bg-white"></i>
+                </div>
+                <div class="flex flex-col leading-none">
+                    <span class="text-3xl font-extrabold tracking-tight text-slate-900">1<span class="font-normal">click</span></span>
+                    <span class="text-xs font-bold tracking-[0.3em] text-[#0083c1] uppercase">Solar</span>
+                </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden lg:flex items-center gap-8 font-bold text-sm uppercase tracking-wide transition-colors duration-300" id="menu-items">
+                <a href="#how-it-works" class="hover:text-[#0083c1] transition">Process</a>
+                <a href="#comparison" class="hover:text-[#0083c1] transition">Why Us</a>
+                <a href="#gallery" class="hover:text-[#0083c1] transition">Projects</a>
+                <a href="#reviews" class="hover:text-[#0083c1] transition">Reviews</a>
+                <a href="#faq" class="hover:text-[#0083c1] transition">FAQ</a>
+            </div>
+
+            <!-- CTA Button -->
+            <a href="#calculator" id="nav-btn" class="hidden md:flex items-center bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-3 rounded-full uppercase font-bold text-sm tracking-wider hover:shadow-lg hover:shadow-orange-500/30 transition transform hover:-translate-y-1 active:scale-95">
+                Get Quote
+            </a>
+            
+            <!-- Mobile Menu Icon -->
+            <button class="lg:hidden text-2xl transition-colors duration-300 text-slate-900" id="mobile-icon" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobileMenu" class="hidden absolute top-full left-0 w-full bg-white shadow-xl border-t border-gray-100 lg:hidden">
+            <div class="flex flex-col p-6 space-y-4 text-slate-800 font-bold">
+                <a href="#how-it-works" onclick="toggleMobileMenu()" class="hover:text-orange-500 block py-2 border-b border-gray-100">Process</a>
+                <a href="#comparison" onclick="toggleMobileMenu()" class="hover:text-orange-500 block py-2 border-b border-gray-100">Why Us</a>
+                <a href="#gallery" onclick="toggleMobileMenu()" class="hover:text-orange-500 block py-2 border-b border-gray-100">Projects</a>
+                <a href="#calculator" onclick="toggleMobileMenu()" class="bg-orange-500 text-white text-center py-4 rounded-xl shadow-md mt-4">Get Instant Quote</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. HERO SECTION -->
+    <header class="relative pt-40 pb-20 lg:pt-56 lg:pb-40 overflow-hidden">
+        <!-- Background Image -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1566093097221-ac2335b09e70?q=80&w=2070&auto=format&fit=crop" alt="Modern Solar Roof" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-r from-slate-900/95 via-slate-900/80 to-slate-900/30"></div>
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                
+                <!-- Left Content -->
+                <div class="lg:w-1/2 text-white space-y-8 fade-in-up">
+                    <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-orange-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest backdrop-blur-md">
+                        <span class="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></span>
+                        2025 Incentives Active
+                    </div>
+                    <h1 class="text-5xl lg:text-7xl font-extrabold uppercase leading-tight tracking-tight drop-shadow-2xl">
+                        Solar Quotes In <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#0083c1] to-cyan-400">Just 1 Click.</span>
+                    </h1>
+                    <p class="text-slate-300 text-lg max-w-lg font-light leading-relaxed border-l-4 border-orange-500 pl-6">
+                        Skip the sales calls. Get your custom solar design and savings report instantly. 
+                        <span class="text-white font-bold">Fast. Digital. Transparent.</span>
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-4 text-sm font-bold pt-6">
+                        <div class="flex items-center gap-2 bg-slate-800/50 px-5 py-3 rounded-lg backdrop-blur-sm border border-slate-700/50">
+                            <i class="fas fa-check-circle text-orange-500"></i> Zero Down
+                        </div>
+                        <div class="flex items-center gap-2 bg-slate-800/50 px-5 py-3 rounded-lg backdrop-blur-sm border border-slate-700/50">
+                            <i class="fas fa-check-circle text-orange-500"></i> 25-Year Warranty
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Content: THE BRANDED CALCULATOR -->
+                <div class="lg:w-1/2 w-full flex justify-center lg:justify-end scale-in delay-200" id="calculator">
+                    <div class="glass-card w-full max-w-md rounded-[2rem] overflow-hidden relative group hover:shadow-2xl transition duration-500 bg-white">
+                        
+                        <div class="p-8 border-b border-slate-100 relative z-10 bg-white">
+                            <h3 class="text-2xl font-bold text-slate-900 uppercase flex items-center gap-3">
+                                <div class="bg-blue-50 p-3 rounded-full text-[#0083c1]"><i class="fas fa-bolt"></i></div>
+                                Savings Engine
+                            </h3>
+                            <p class="text-slate-500 text-xs font-bold uppercase tracking-wider mt-1 pl-14 text-[#0083c1]">Calculate your ROI instantly</p>
+                        </div>
+
+                        <div class="p-8 space-y-8 relative z-10 bg-white">
+                            <!-- Slider -->
+                            <div>
+                                <label class="flex justify-between text-sm font-bold text-slate-700 mb-4 uppercase tracking-wide">
+                                    <span>Avg. Monthly Bill</span>
+                                    <span class="text-4xl text-slate-900 font-black" id="billDisplay">$200</span>
+                                </label>
+                                <input type="range" id="billInput" min="50" max="800" value="200" step="10">
+                                <div class="flex justify-between text-xs text-slate-400 mt-2 font-bold uppercase tracking-wider">
+                                    <span>$50</span>
+                                    <span>$800+</span>
+                                </div>
+                            </div>
+
+                            <!-- Sun Buttons -->
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-3 uppercase tracking-wide">Roof Sun Exposure</label>
+                                <div class="grid grid-cols-3 gap-3">
+                                    <button onclick="setSun('low')" id="btn-low" class="sun-btn border-2 border-slate-100 rounded-xl p-4 text-sm hover:border-[#0083c1] transition flex flex-col items-center gap-2 text-slate-400 font-bold uppercase hover:-translate-y-1 group">
+                                        <i class="fas fa-cloud text-lg group-hover:text-[#0083c1] transition"></i> Low
+                                    </button>
+                                    <button onclick="setSun('medium')" id="btn-medium" class="sun-btn border-2 border-[#0083c1] bg-blue-50 rounded-xl p-4 text-sm transition flex flex-col items-center gap-2 text-slate-900 font-bold ring-2 ring-blue-100 uppercase transform -translate-y-1 shadow-md">
+                                        <i class="fas fa-cloud-sun text-[#0083c1] text-lg"></i> Medium
+                                    </button>
+                                    <button onclick="setSun('high')" id="btn-high" class="sun-btn border-2 border-slate-100 rounded-xl p-4 text-sm hover:border-[#0083c1] transition flex flex-col items-center gap-2 text-slate-400 font-bold uppercase hover:-translate-y-1 group">
+                                        <i class="fas fa-sun text-lg group-hover:text-orange-500 transition"></i> High
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 1-Click Button Style -->
+                            <button onclick="calculateSolar()" class="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold py-4 rounded-xl shadow-lg shadow-orange-500/30 transition transform active:scale-95 hover:scale-[1.02] text-xl uppercase tracking-widest flex justify-center items-center gap-3 group">
+                                <i class="fas fa-mouse-pointer group-hover:animate-bounce"></i> Click To Reveal
+                            </button>
+                        </div>
+
+                        <!-- Results (Expands Underneath) -->
+                        <div id="resultsSection" class="hidden bg-slate-900 p-8 text-white text-center border-t border-slate-800 animate-fade-in-up">
+                            <p class="text-xs text-orange-500 font-bold uppercase tracking-widest mb-2">Est. 20-Year Savings</p>
+                            <h3 class="text-5xl font-black text-white mb-2" id="savingsResult">$0.00</h3>
+                            <p class="text-slate-500 text-xs mb-6 italic">*Includes 30% Federal Tax Credit</p>
+                            
+                            <div class="grid grid-cols-2 gap-6 mb-6 w-full">
+                                <div class="bg-slate-800 p-3 rounded-lg border border-slate-700">
+                                    <p class="text-xs text-slate-400 uppercase mb-1">System Size</p>
+                                    <p class="font-bold text-lg" id="systemSize">0 kW</p>
+                                </div>
+                                <div class="bg-slate-800 p-3 rounded-lg border border-slate-700">
+                                    <p class="text-xs text-slate-400 uppercase mb-1">Net Cost</p>
+                                    <p class="font-bold text-lg text-[#0083c1]" id="systemCost">$0</p>
+                                </div>
+                            </div>
+
+                            <button class="w-full bg-white text-slate-900 font-bold py-4 rounded-xl hover:bg-slate-200 transition uppercase tracking-wide shadow-lg transform hover:-translate-y-1">
+                                Get My 1-Click Quote
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 3. SECTION: COMPARISON TABLE (The "Financial Truth") -->
+    <section id="comparison" class="py-24 bg-slate-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-12 fade-in-up">
+                <h2 class="text-sm font-bold text-[#0083c1] uppercase tracking-widest mb-3">The Financial Truth</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Why Rent Power When You Can Own It?</h3>
+                <p class="text-slate-600">The utility company raises rates every year. 1 Click Solar locks in your cost forever.</p>
+            </div>
+
+            <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100 fade-in-up">
+                <!-- Table Header -->
+                <div class="grid grid-cols-3 bg-slate-900 text-white p-4 md:p-6 text-sm md:text-lg font-bold">
+                    <div class="col-span-1">Comparison</div>
+                    <div class="col-span-1 text-center text-slate-400">Utility Company</div>
+                    <div class="col-span-1 text-center text-[#0083c1]">1 Click Solar</div>
+                </div>
+                
+                <!-- Row 1 -->
+                <div class="grid grid-cols-3 p-4 md:p-6 border-b border-slate-100 hover:bg-slate-50 transition">
+                    <div class="col-span-1 font-bold text-slate-700 flex items-center gap-2">
+                        <i class="fas fa-chart-line text-slate-400"></i> Rate Stability
+                    </div>
+                    <div class="col-span-1 text-center text-red-500 font-medium">Increases Yearly</div>
+                    <div class="col-span-1 text-center text-green-600 font-bold flex justify-center items-center gap-2">
+                        <i class="fas fa-lock"></i> Fixed Forever
+                    </div>
+                </div>
+
+                <!-- Row 2 -->
+                <div class="grid grid-cols-3 p-4 md:p-6 border-b border-slate-100 hover:bg-slate-50 transition">
+                    <div class="col-span-1 font-bold text-slate-700 flex items-center gap-2">
+                        <i class="fas fa-home text-slate-400"></i> Home Value
+                    </div>
+                    <div class="col-span-1 text-center text-slate-500">No Increase</div>
+                    <div class="col-span-1 text-center text-green-600 font-bold">+4.1% Increase</div>
+                </div>
+
+                <!-- Row 3 (Highlighted) -->
+                <div class="grid grid-cols-3 p-4 md:p-6 bg-blue-50/50">
+                    <div class="col-span-1 font-bold text-slate-700 flex items-center gap-2">
+                        <i class="fas fa-wallet text-slate-400"></i> Tax Credits
+                    </div>
+                    <div class="col-span-1 text-center text-slate-500">None</div>
+                    <div class="col-span-1 text-center text-green-600 font-bold text-lg">30% Federal Credit</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. SECTION: HOW IT WORKS (The "Simple Process") -->
+    <section id="how-it-works" class="py-24 bg-white relative">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-20 fade-in-up">
+                <h3 class="text-orange-500 font-bold uppercase tracking-widest mb-3 text-sm">Effortless Process</h3>
+                <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 uppercase">Go Solar in 4 Easy Steps</h2>
+                <p class="text-slate-500 mt-4 max-w-2xl mx-auto">We handle the permits, the design, and the installation. You just click.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Step 1 -->
+                <div class="relative p-8 bg-slate-50 rounded-2xl border border-slate-100 hover:shadow-xl transition duration-300 group fade-in-up">
+                    <div class="absolute -top-6 left-6 w-12 h-12 bg-slate-900 text-white rounded-xl flex items-center justify-center text-xl font-bold shadow-lg group-hover:bg-[#0083c1] transition">1</div>
+                    <h4 class="mt-6 text-xl font-bold uppercase mb-3 text-slate-900">Consultation</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed">We analyze your roof and energy bill to design a custom system aimed at 100% offset.</p>
+                </div>
+                <!-- Step 2 -->
+                <div class="relative p-8 bg-slate-50 rounded-2xl border border-slate-100 hover:shadow-xl transition duration-300 group fade-in-up" style="animation-delay: 0.1s">
+                    <div class="absolute -top-6 left-6 w-12 h-12 bg-white text-slate-900 border-2 border-slate-200 rounded-xl flex items-center justify-center text-xl font-bold shadow-lg group-hover:border-orange-500 group-hover:text-orange-500 transition">2</div>
+                    <h4 class="mt-6 text-xl font-bold uppercase mb-3 text-slate-900">Design & Permits</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed">Our team handles all city permits and HOA approvals. You don't lift a finger.</p>
+                </div>
+                <!-- Step 3 -->
+                <div class="relative p-8 bg-slate-50 rounded-2xl border border-slate-100 hover:shadow-xl transition duration-300 group fade-in-up" style="animation-delay: 0.2s">
+                    <div class="absolute -top-6 left-6 w-12 h-12 bg-slate-900 text-white rounded-xl flex items-center justify-center text-xl font-bold shadow-lg group-hover:bg-[#0083c1] transition">3</div>
+                    <h4 class="mt-6 text-xl font-bold uppercase mb-3 text-slate-900">1-Day Install</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed">Our certified local team installs your entire system in a single day.</p>
+                </div>
+                <!-- Step 4 -->
+                <div class="relative p-8 bg-slate-50 rounded-2xl border border-slate-100 hover:shadow-xl transition duration-300 group fade-in-up" style="animation-delay: 0.3s">
+                    <div class="absolute -top-6 left-6 w-12 h-12 bg-orange-500 text-white rounded-xl flex items-center justify-center text-xl font-bold shadow-lg group-hover:scale-110 transition">4</div>
+                    <h4 class="mt-6 text-xl font-bold uppercase mb-3 text-slate-900">Power On</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed">Flip the switch and watch your meter spin backwards. You are now energy independent.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. SECTION: PORTFOLIO (Gallery) -->
+    <section id="gallery" class="py-24 bg-slate-50">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-4 fade-in-up">
+                <div class="max-w-2xl">
+                    <h2 class="text-sm font-bold text-[#0083c1] uppercase tracking-widest mb-3">Our Portfolio</h2>
+                    <h3 class="text-3xl md:text-4xl font-bold text-slate-900">Serving Colorado, Arizona, & Texas</h3>
+                </div>
+                <a href="#" class="text-slate-900 font-bold hover:text-[#0083c1] transition flex items-center gap-2">
+                    View All Projects <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="rounded-2xl overflow-hidden shadow-lg group relative h-80 cursor-pointer fade-in-up">
+                    <img src="https://images.unsplash.com/photo-1624397640148-949b1732bb0a?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent to-transparent opacity-80"></div>
+                    <div class="absolute bottom-6 left-6 text-white">
+                        <p class="text-orange-500 font-bold text-xs uppercase tracking-wider mb-1">Texas</p>
+                        <h4 class="text-xl font-bold">Modern Residential</h4>
+                    </div>
+                </div>
+                <!-- Project 2 -->
+                <div class="rounded-2xl overflow-hidden shadow-lg group relative h-80 cursor-pointer fade-in-up" style="animation-delay: 0.1s">
+                    <img src="https://images.unsplash.com/photo-1592833159155-c62df1b65634?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent to-transparent opacity-80"></div>
+                    <div class="absolute bottom-6 left-6 text-white">
+                        <p class="text-orange-500 font-bold text-xs uppercase tracking-wider mb-1">Arizona</p>
+                        <h4 class="text-xl font-bold">Ground Mount Array</h4>
+                    </div>
+                </div>
+                <!-- Project 3 -->
+                <div class="rounded-2xl overflow-hidden shadow-lg group relative h-80 cursor-pointer fade-in-up" style="animation-delay: 0.2s">
+                    <img src="https://images.unsplash.com/photo-1611365892117-00ac5ef43c90?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent to-transparent opacity-80"></div>
+                    <div class="absolute bottom-6 left-6 text-white">
+                        <p class="text-orange-500 font-bold text-xs uppercase tracking-wider mb-1">Florida</p>
+                        <h4 class="text-xl font-bold">Roofing + Solar Combo</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. SECTION: SMART MONITORING (App) -->
+    <section class="py-24 bg-white overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <!-- Phone Mockup -->
+                <div class="md:w-1/2 relative fade-in-up">
+                    <div class="relative mx-auto border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px] shadow-xl">
+                        <div class="h-[32px] w-[3px] bg-gray-800 absolute -left-[17px] top-[72px] rounded-l-lg"></div>
+                        <div class="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[124px] rounded-l-lg"></div>
+                        <div class="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[178px] rounded-l-lg"></div>
+                        <div class="h-[64px] w-[3px] bg-gray-800 absolute -right-[17px] top-[142px] rounded-r-lg"></div>
+                        <div class="rounded-[2rem] overflow-hidden w-[272px] h-[572px] bg-white relative">
+                            <img src="https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover" alt="App Interface">
+                            <div class="absolute inset-0 bg-black/60 flex flex-col justify-center items-center text-white p-6 text-center backdrop-blur-sm">
+                                <i class="fas fa-check-circle text-5xl text-green-400 mb-4 shadow-lg rounded-full bg-white"></i>
+                                <h4 class="text-2xl font-bold">System Active</h4>
+                                <p class="text-sm mb-4 opacity-80">Producing 4.2 kW</p>
+                                <div class="w-full bg-white/20 rounded-full h-2 mb-2">
+                                    <div class="bg-green-400 h-2 rounded-full" style="width: 75%"></div>
+                                </div>
+                                <p class="text-xs opacity-80">75% Daily Goal Reached</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- App Features -->
+                <div class="md:w-1/2 space-y-8 fade-in-up" style="animation-delay: 0.2s">
+                    <h2 class="text-sm font-bold text-[#0083c1] uppercase tracking-widest">Total Control</h2>
+                    <h3 class="text-3xl md:text-5xl font-bold text-slate-900">Monitor Your Savings in Real-Time</h3>
+                    <p class="text-slate-600 text-lg leading-relaxed">
+                        Stop guessing what your bill will be. Our smart app lets you track exactly how much energy you produce and how much money you save, right from your pocket.
+                    </p>
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="bg-slate-100 p-4 rounded-xl text-slate-900 text-xl"><i class="fas fa-bolt text-[#0083c1]"></i></div>
+                            <div>
+                                <h4 class="font-bold text-lg">Live Production Data</h4>
+                                <p class="text-slate-500 text-sm">See your panels working minute-by-minute.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="bg-slate-100 p-4 rounded-xl text-slate-900 text-xl"><i class="fas fa-chart-pie text-[#0083c1]"></i></div>
+                            <div>
+                                <h4 class="font-bold text-lg">Consumption Tracking</h4>
+                                <p class="text-slate-500 text-sm">Understand where your energy goes.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="bg-slate-900 text-white px-8 py-4 rounded-xl font-bold hover:bg-slate-800 transition shadow-lg flex items-center gap-2">
+                        <i class="fab fa-apple text-xl"></i> Download App
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. FOOTER -->
+    <footer class="bg-slate-900 text-white py-16 border-t-4 border-[#0083c1]">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-12">
+                <div class="space-y-6">
+                    <!-- Footer Logo -->
+                    <div class="flex items-center gap-3">
+                        <div class="relative w-10 h-10">
+                            <i class="fas fa-home text-3xl text-[#0083c1] absolute bottom-0 left-0"></i>
+                            <i class="fas fa-sun text-xl text-[#0083c1] absolute -top-1 -right-1"></i>
+                            <i class="fas fa-location-arrow text-orange-500 text-lg absolute bottom-0 -right-2 transform -rotate-45 border-2 border-slate-900 rounded-full bg-slate-900"></i>
+                        </div>
+                        <div class="flex flex-col leading-none">
+                            <span class="text-2xl font-bold uppercase">1<span class="text-[#0083c1]">Click</span></span>
+                            <span class="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Home Solutions</span>
+                        </div>
+                    </div>
+                    <p class="text-slate-400 text-sm max-w-xs leading-relaxed">Simplifying home upgrades with technology and transparency. No door knockers. Just savings.</p>
+                </div>
+                
+                <div class="flex gap-16">
+                    <div>
+                        <h5 class="font-bold uppercase mb-6 text-[#0083c1] tracking-wider text-sm">Services</h5>
+                        <ul class="space-y-3 text-sm text-slate-300">
+                            <li class="hover:text-white cursor-pointer transition">Solar Installation</li>
+                            <li class="hover:text-white cursor-pointer transition">Roofing</li>
+                            <li class="hover:text-white cursor-pointer transition">Battery Backup</li>
+                            <li class="hover:text-white cursor-pointer transition">HVAC</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="font-bold uppercase mb-6 text-[#0083c1] tracking-wider text-sm">Company</h5>
+                        <ul class="space-y-3 text-sm text-slate-300">
+                            <li class="hover:text-white cursor-pointer transition">About Us</li>
+                            <li class="hover:text-white cursor-pointer transition">Careers</li>
+                            <li class="hover:text-white cursor-pointer transition">Privacy Policy</li>
+                            <li class="hover:text-white cursor-pointer transition">Terms of Use</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-slate-500">
+                <p>&copy; 2025 1 Click Home Solutions. All Rights Reserved.</p>
+                <div class="flex gap-6 mt-4 md:mt-0 text-xl">
+                    <a href="#" class="hover:text-[#0083c1] transition"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="hover:text-[#0083c1] transition"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-[#0083c1] transition"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // --- MOBILE MENU TOGGLE ---
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                menu.classList.add('block');
+            } else {
+                menu.classList.add('hidden');
+                menu.classList.remove('block');
+            }
+        }
+
+        // --- SCROLL HEADER LOGIC ---
+        window.addEventListener('scroll', function() {
+            const nav = document.getElementById('navbar');
+            const logoText = document.getElementById('logo-text-1');
+            const mobileIcon = document.getElementById('mobile-icon');
+
+            if (window.scrollY > 50) {
+                // SCROLLED STATE (White)
+                nav.classList.remove('bg-transparent', 'text-slate-800', 'py-4');
+                nav.classList.add('bg-white/95', 'backdrop-blur-md', 'text-slate-900', 'py-3', 'shadow-md');
+            } else {
+                // TOP STATE (Transparent)
+                nav.classList.add('bg-transparent', 'text-slate-800', 'py-4');
+                nav.classList.remove('bg-white/95', 'backdrop-blur-md', 'text-slate-900', 'py-3', 'shadow-md');
+            }
+        });
+
+        // --- ANIMATION OBSERVER ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in-up, .scale-in').forEach(el => observer.observe(el));
+
+        // --- CALCULATOR LOGIC ---
+        const COST_PER_KWH = 0.18;
+        const COST_PER_WATT = 2.80;
+        const TAX_INCENTIVE = 0.30;
+        let sunHours = 4.5;
+
+        const slider = document.getElementById('billInput');
+        const display = document.getElementById('billDisplay');
+
+        slider.oninput = function() {
+            display.innerHTML = '$' + this.value;
+        }
+
+        function setSun(level) {
+            document.querySelectorAll('.sun-btn').forEach(btn => {
+                btn.className = 'sun-btn border-2 border-slate-200 rounded-xl p-4 text-sm hover:border-[#0083c1] transition flex flex-col items-center gap-2 text-slate-400 font-bold uppercase hover:-translate-y-1 group';
+            });
+            const btn = document.getElementById('btn-' + level);
+            btn.className = 'sun-btn border-2 border-[#0083c1] bg-blue-50 rounded-xl p-4 text-sm transition flex flex-col items-center gap-2 text-slate-900 font-bold ring-2 ring-blue-200 uppercase transform -translate-y-1 shadow-md';
+
+            if (level === 'low') sunHours = 3.5;
+            if (level === 'medium') sunHours = 4.5;
+            if (level === 'high') sunHours = 5.5;
+        }
+
+        function calculateSolar() {
+            const monthlyBill = parseInt(slider.value);
+            const monthlyKwhNeeded = monthlyBill / COST_PER_KWH;
+            let systemSizeKW = (monthlyKwhNeeded / (sunHours * 30)) * 1.2;
+            systemSizeKW = Math.round(systemSizeKW * 10) / 10;
+            const grossCost = systemSizeKW * 1000 * COST_PER_WATT;
+            const netCost = grossCost * (1 - TAX_INCENTIVE);
+            
+            let totalUtilityCost = 0;
+            let currentYearlyBill = monthlyBill * 12;
+            for(let i=0; i<20; i++) {
+                totalUtilityCost += currentYearlyBill;
+                currentYearlyBill = currentYearlyBill * 1.04;
+            }
+
+            const savings = totalUtilityCost - netCost;
+
+            document.getElementById('savingsResult').innerText = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(savings);
+            document.getElementById('systemSize').innerText = systemSizeKW + " kW";
+            document.getElementById('systemCost').innerText = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(netCost);
+            
+            const results = document.getElementById('resultsSection');
+            results.classList.remove('hidden');
+            // Force animation restart
+            results.classList.remove('fade-in-up');
+            void results.offsetWidth; 
+            results.classList.add('fade-in-up');
+            results.classList.add('visible');
+        }
+    </script>
+</body>
+</html>
