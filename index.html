@@ -50,59 +50,67 @@
             -webkit-text-fill-color: transparent;
             background-image: linear-gradient(to right, #0ea5e9, #0284c7);
         }
+
+        /* Pill Header Specifics */
+        .pill-nav {
+            background: rgba(17, 24, 39, 0.8); /* Dark background with opacity */
+            backdrop-filter: blur(12px); /* Glass blur effect */
+            border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 smooth-scroll">
 
-    <!-- 1. FLOATING HEADER -->
-    <nav id="navbar" class="fixed w-full z-50 top-0 transition-all duration-500 ease-in-out py-4 bg-transparent text-slate-800">
-        <div class="container mx-auto px-6 flex justify-between items-center">
+    <!-- 1. FLOATING PILL HEADER (Centered & Dark Glass) -->
+    <div class="fixed w-full z-50 top-6 flex justify-center px-4">
+        <nav class="pill-nav rounded-full px-4 py-2 md:px-8 md:py-3 flex justify-between items-center w-full max-w-5xl transition-all duration-300">
             
-            <!-- LOGO CONSTRUCTION -->
+            <!-- LOGO IMAGE (Bold & Visible on Dark Background) -->
             <a href="#" class="flex items-center gap-3 group">
-                <div class="relative w-12 h-12">
-                    <!-- House & Sun (Cyan/Blue) -->
-                    <i class="fas fa-home text-4xl text-[#0083c1] absolute bottom-0 left-0"></i>
-                    <i class="fas fa-sun text-2xl text-[#0083c1] absolute -top-1 -right-1 animate-pulse"></i>
-                    <!-- Cursor (Orange) -->
-                    <i class="fas fa-location-arrow text-orange-500 text-2xl absolute bottom-0 -right-2 transform -rotate-45 drop-shadow-md border-2 border-white rounded-full bg-white"></i>
-                </div>
-                <div class="flex flex-col leading-none">
-                    <span class="text-3xl font-extrabold tracking-tight text-slate-900">1<span class="font-normal">click</span></span>
-                    <span class="text-xs font-bold tracking-[0.3em] text-[#0083c1] uppercase">Solar</span>
+                <!-- Using a white background container for the logo to pop against the dark header -->
+                <div class="bg-white rounded-full p-1.5">
+                    <img src="logo.png" alt="1 Click Solar Logo" class="h-8 w-auto object-contain hover:scale-105 transition duration-300">
                 </div>
             </a>
 
             <!-- Desktop Menu -->
-            <div class="hidden lg:flex items-center gap-8 font-bold text-sm uppercase tracking-wide transition-colors duration-300" id="menu-items">
-                <a href="#how-it-works" class="hover:text-[#0083c1] transition">Process</a>
-                <a href="#comparison" class="hover:text-[#0083c1] transition">Why Us</a>
-                <a href="#gallery" class="hover:text-[#0083c1] transition">Projects</a>
-                <a href="#reviews" class="hover:text-[#0083c1] transition">Reviews</a>
-                <a href="#faq" class="hover:text-[#0083c1] transition">FAQ</a>
+            <div class="hidden lg:flex items-center gap-1 md:gap-2 text-sm font-medium text-gray-300">
+                <!-- "Home" Active State Style -->
+                <a href="#" class="bg-indigo-600/80 text-white px-5 py-2 rounded-full hover:bg-indigo-500 transition shadow-md shadow-indigo-500/20">Home</a>
+                
+                <a href="#how-it-works" class="px-4 py-2 hover:text-white transition">About</a>
+                <a href="#comparison" class="px-4 py-2 hover:text-white transition">Solutions</a>
+                <a href="#gallery" class="px-4 py-2 hover:text-white transition">Case Studies</a>
+                <a href="#reviews" class="px-4 py-2 hover:text-white transition">Contact</a>
             </div>
 
-            <!-- CTA Button -->
-            <a href="#calculator" id="nav-btn" class="hidden md:flex items-center bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-3 rounded-full uppercase font-bold text-sm tracking-wider hover:shadow-lg hover:shadow-orange-500/30 transition transform hover:-translate-y-1 active:scale-95">
-                Get Quote
-            </a>
-            
-            <!-- Mobile Menu Icon -->
-            <button class="lg:hidden text-2xl transition-colors duration-300 text-slate-900" id="mobile-icon" onclick="toggleMobileMenu()">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
-        
-        <!-- Mobile Menu Dropdown -->
-        <div id="mobileMenu" class="hidden absolute top-full left-0 w-full bg-white shadow-xl border-t border-gray-100 lg:hidden">
-            <div class="flex flex-col p-6 space-y-4 text-slate-800 font-bold">
-                <a href="#how-it-works" onclick="toggleMobileMenu()" class="hover:text-orange-500 block py-2 border-b border-gray-100">Process</a>
-                <a href="#comparison" onclick="toggleMobileMenu()" class="hover:text-orange-500 block py-2 border-b border-gray-100">Why Us</a>
-                <a href="#gallery" onclick="toggleMobileMenu()" class="hover:text-orange-500 block py-2 border-b border-gray-100">Projects</a>
-                <a href="#calculator" onclick="toggleMobileMenu()" class="bg-orange-500 text-white text-center py-4 rounded-xl shadow-md mt-4">Get Instant Quote</a>
+            <!-- CTA Button (Mobile Menu Trigger on small screens, Quote button on large) -->
+            <div class="flex items-center gap-4">
+                 <!-- Desktop Quote Button (Optional, keeping it clean inside the pill) -->
+                <a href="#calculator" class="hidden md:block bg-orange-500 text-white px-6 py-2 rounded-full font-bold text-sm hover:bg-orange-600 transition shadow-lg shadow-orange-500/30 transform hover:-translate-y-0.5">
+                    Get Quote
+                </a>
+
+                <!-- Mobile Menu Icon -->
+                <button class="lg:hidden text-2xl text-white p-1" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
+        </nav>
+    </div>
+    
+    <!-- Mobile Menu Dropdown (Updated to match dark theme) -->
+    <div id="mobileMenu" class="hidden fixed top-24 left-1/2 transform -translate-x-1/2 w-[90%] max-w-md bg-gray-900/95 backdrop-blur-xl shadow-2xl border border-gray-700 rounded-2xl z-40 p-6 text-center">
+        <div class="flex flex-col space-y-4 text-gray-300 font-medium">
+            <a href="#" onclick="toggleMobileMenu()" class="text-white font-bold">Home</a>
+            <a href="#how-it-works" onclick="toggleMobileMenu()" class="hover:text-white">About</a>
+            <a href="#comparison" onclick="toggleMobileMenu()" class="hover:text-white">Solutions</a>
+            <a href="#gallery" onclick="toggleMobileMenu()" class="hover:text-white">Case Studies</a>
+            <a href="#reviews" onclick="toggleMobileMenu()" class="hover:text-white">Contact</a>
+            <a href="#calculator" onclick="toggleMobileMenu()" class="bg-orange-500 text-white py-3 rounded-xl font-bold shadow-lg mt-2">Get Quote</a>
         </div>
-    </nav>
+    </div>
 
     <!-- 2. HERO SECTION -->
     <header class="relative pt-40 pb-20 lg:pt-56 lg:pb-40 overflow-hidden">
@@ -308,7 +316,7 @@
             <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-4 fade-in-up">
                 <div class="max-w-2xl">
                     <h2 class="text-sm font-bold text-[#0083c1] uppercase tracking-widest mb-3">Our Portfolio</h2>
-                    <h3 class="text-3xl md:text-4xl font-bold text-slate-900">Serving Colorado, Arizona, & Texas</h3>
+                    <h3 class="text-3xl md:text-4xl font-bold text-slate-900">Recent Projects</h3>
                 </div>
                 <a href="#" class="text-slate-900 font-bold hover:text-[#0083c1] transition flex items-center gap-2">
                     View All Projects <i class="fas fa-arrow-right"></i>
@@ -410,15 +418,9 @@
             <div class="flex flex-col md:flex-row justify-between items-start gap-12">
                 <div class="space-y-6">
                     <!-- Footer Logo -->
-                    <div class="flex items-center gap-3">
-                        <div class="relative w-10 h-10">
-                            <i class="fas fa-home text-3xl text-[#0083c1] absolute bottom-0 left-0"></i>
-                            <i class="fas fa-sun text-xl text-[#0083c1] absolute -top-1 -right-1"></i>
-                            <i class="fas fa-location-arrow text-orange-500 text-lg absolute bottom-0 -right-2 transform -rotate-45 border-2 border-slate-900 rounded-full bg-slate-900"></i>
-                        </div>
-                        <div class="flex flex-col leading-none">
-                            <span class="text-2xl font-bold uppercase">1<span class="text-[#0083c1]">Click</span></span>
-                            <span class="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Home Solutions</span>
+                    <div class="flex items-center gap-3 group">
+                        <div class="bg-white p-1.5 rounded-lg shadow-sm">
+                            <img src="logo.png" alt="1 Click Solar Logo" class="h-8 w-auto object-contain">
                         </div>
                     </div>
                     <p class="text-slate-400 text-sm max-w-xs leading-relaxed">Simplifying home upgrades with technology and transparency. No door knockers. Just savings.</p>
@@ -469,23 +471,6 @@
                 menu.classList.remove('block');
             }
         }
-
-        // --- SCROLL HEADER LOGIC ---
-        window.addEventListener('scroll', function() {
-            const nav = document.getElementById('navbar');
-            const logoText = document.getElementById('logo-text-1');
-            const mobileIcon = document.getElementById('mobile-icon');
-
-            if (window.scrollY > 50) {
-                // SCROLLED STATE (White)
-                nav.classList.remove('bg-transparent', 'text-slate-800', 'py-4');
-                nav.classList.add('bg-white/95', 'backdrop-blur-md', 'text-slate-900', 'py-3', 'shadow-md');
-            } else {
-                // TOP STATE (Transparent)
-                nav.classList.add('bg-transparent', 'text-slate-800', 'py-4');
-                nav.classList.remove('bg-white/95', 'backdrop-blur-md', 'text-slate-900', 'py-3', 'shadow-md');
-            }
-        });
 
         // --- ANIMATION OBSERVER ---
         const observer = new IntersectionObserver((entries) => {
